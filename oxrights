@@ -1,0 +1,6 @@
+#!/bin/sh
+chown -R root:www-data *
+chown -R root:www-data .htaccess
+chmod 664 .htaccess
+find . -type d -exec chmod 2775 {} \;
+find . -type f -exec chmod 664 {} \;
