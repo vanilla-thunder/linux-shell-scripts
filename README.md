@@ -26,3 +26,5 @@ equal to "service apache restart"
 
 ### a2reload
 equal to "service apache reload"
+
+<img src="https://ma-be.info/piwik/piwik.php?idsite=2&rec=1&action_name=linux-shell-scripts" style="border:0" alt="" />
