@@ -11,17 +11,35 @@ a2enmod auth_mysql
 service apache2 restart
 
 # mysql stuff
-apt-get -y install mysql-common mysql-server mysql-client
-service apache2 restart
+read -p "wanna install mysql server and client? " -n 1 -r
+if [[ $REPLY =~ [Yy]$ ]]
+then
+  apt-get -y install mysql-common mysql-server mysql-client
+  service apache2 restart
+fi
 
 
 # git
+read -p "wanna install git? " -n 1 -r
+if [[ $REPLY =~ [Yy]$ ]]
+then
+  apt-get -y install git-core
+fi
 
 # installing node.js from backports + npm
-echo "deb http://ftp.us.debian.org/debian wheezy-backports main" >> /etc/apt/sources.list  
-apt-get update  
-apt-get -y install nodejs 
-curl https://npmjs.org/install.sh | sh
+read -p "wanna install nodejs? " -n 1 -r
+if [[ $REPLY =~ [Yy]$ ]]
+then
+  echo "deb http://ftp.us.debian.org/debian wheezy-backports main" >> /etc/apt/sources.list  
+  apt-get update  
+  apt-get -y install nodejs nodejs-legacy
+  curl -L https://npmjs.org/install.sh | sh    
+fi
+
 
 # ImageMagick + imagick php api
-apt-get -y install imagemagick libpng-dev libjpeg-dev php5-imagick
+read -p "wanna install ImageMagick and php api? " -n 1 -r
+if [[ $REPLY =~ [Yy]$ ]]
+then
+  apt-get -y install imagemagick libpng-dev libjpeg-dev php5-imagick
+fi
