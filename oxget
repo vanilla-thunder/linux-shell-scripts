@@ -1,6 +1,7 @@
 #!/bin/sh
 wget -O oxid_ce.zip http://download.oxid-esales.com/ce/index.php
 unzip oxid_ce.zip
+rm oxid_ce.zip
 chown -R root:www-data *
 find . -type d -exec chmod 2775 {} \;
 find . -type f -exec chmod 664 {} \;
