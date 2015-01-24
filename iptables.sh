@@ -1,26 +1,15 @@
 #!/bin/bash
-# ---------------------------------------------------------------------
-# Linux iptables init script, Copyright (c) 2013 GPL
-# --------------------------------------------------------------------
-### BEGIN INIT INFO
-# Provides:          firewall
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
-# Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
-# Short-Description: Start daemon at boot time
-# Description:       Enable iptables and ip6tables rules
-### END INIT INFO
+
+# settings 
+device="eth0" #// KVM
+#device="venet0" #// OpenVZ
+sshdestination=x.xyz.tld #// allow ssh connection only for a particular domain
+sshport=22 #// SSh Port
+
 
 # iptables lookup
 iptables=`which iptables`
 ip6tables=`which ip6tables`
-
-# setup network device
-device="eth0" #// KVM
-#device="venet0" #// OpenVZ
-#yourexternalid="12.34.56.78" #// Change this value!
-#yourvpnsubnet="10.1.1.0/24" #// Change this value!
 
 # stop if iptables is not found
 test -f "$iptables" || exit 0
@@ -109,10 +98,6 @@ iptables -A INPUT -p icmp --icmp-type parameter-problem -j ACCEPT
 
 ip6tables -A INPUT -p ipv6-icmp -j ACCEPT
 
-# allow nodejs
-# iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 8080 -j ACCEPT
-# ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 8080 -j ACCEPT
-
 # allow HTTP
 iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 80 -j ACCEPT
 ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 80 -j ACCEPT
@@ -120,6 +105,10 @@ ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 80 -j ACCEPT
 # allow HTTPS
 #iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 443 -j ACCEPT
 #ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 443 -j ACCEPT
+
+# allow 8080
+# iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 8080 -j ACCEPT
+# ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 8080 -j ACCEPT
 
 # allow GITHUB
 iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 9418 -j ACCEPT
@@ -171,7 +160,8 @@ ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 9418 -j ACCEPT
 #iptables -A INPUT -i $device -m state --state NEW -p tcp --dport 20 -j ACCEPT
 
 # allow SSH
-iptables -A INPUT -i $device -m state --state NEW -p tcp --dport 22 -j ACCEPT
+iptables  -A INPUT -i $device -m state --state NEW -p tcp -d $sshdestination --dport $sshport -j ACCEPT
+ip6tables -A INPUT -i $device -m state --state NEW -p tcp -d $sshdestination --dport $sshport -j ACCEPT
     
 # set default policies REJECT
 iptables -A INPUT -j MY_REJECT
