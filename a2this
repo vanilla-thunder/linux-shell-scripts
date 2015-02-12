@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm /srv/default
+ln -f -s $(pwd) /srv/default
+service apache2 restart

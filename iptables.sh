@@ -3,9 +3,12 @@
 # settings 
 device="eth0" #// KVM
 #device="venet0" #// OpenVZ
-sshdestination=x.xyz.tld #// allow ssh connection only for a particular domain
 sshport=22 #// SSh Port
-
+	
+args=("$@")
+if [ ${args[0]} ]; then
+	sshport="${args[0]}"
+fi
 
 # iptables lookup
 iptables=`which iptables`
@@ -160,8 +163,8 @@ ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 9418 -j ACCEPT
 #iptables -A INPUT -i $device -m state --state NEW -p tcp --dport 20 -j ACCEPT
 
 # allow SSH
-iptables  -A INPUT -i $device -m state --state NEW -p tcp -d $sshdestination --dport $sshport -j ACCEPT
-ip6tables -A INPUT -i $device -m state --state NEW -p tcp -d $sshdestination --dport $sshport -j ACCEPT
+iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport $sshport -j ACCEPT
+ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport $sshport -j ACCEPT
     
 # set default policies REJECT
 iptables -A INPUT -j MY_REJECT
