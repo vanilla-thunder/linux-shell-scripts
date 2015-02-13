@@ -1,4 +1,5 @@
 #!/bin/sh
+
 wget -O oxid_ce.zip http://download.oxid-esales.com/ce/index.php
 unzip oxid_ce.zip
 rm oxid_ce.zip

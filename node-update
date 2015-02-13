@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 node -v
 npm cache clean -f

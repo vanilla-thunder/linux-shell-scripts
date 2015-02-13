@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 rm /srv/default
 ln -f -s $(pwd) /srv/default
