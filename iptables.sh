@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # settings 
 device="eth0" #// KVM
@@ -22,17 +22,17 @@ echo "setting up iptables and ip6tables"
 
 # flush tables
 iptables -F
-iptables -t nat -F
+#iptables -t nat -F
 iptables -t mangle -F
 iptables -X
-iptables -t nat -X
+#iptables -t nat -X
 iptables -t mangle -X
     
 ip6tables -F
-ip6tables -t nat -F
+#ip6tables -t nat -F
 ip6tables -t mangle -F
 ip6tables -X
-ip6tables -t nat -X
+#ip6tables -t nat -X
 ip6tables -t mangle -X    
 
 # set default policies
