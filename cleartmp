@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -d "tmp" ]; then
+  find tmp/ -name "*.txt" -print0 | xargs -0 rm -rf
+  find tmp/ -name "*.php" -print0 | xargs -0 rm -rf
+else
+  echo "tmp directory not found, plx go into the shop root directory"
+fi
