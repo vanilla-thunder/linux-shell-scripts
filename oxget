@@ -1,6 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
-wget -O oxid_ce.zip http://download.oxid-esales.com/ce/index.php
+args=("$@")
+if [ ${args[0]} ]; then
+	wget -O oxid_ce.zip "http://www.oxidforge.org/wiki/download/OXID_ESHOP_CE_${args[0]}.zip"
+
+else
+	wget -O oxid_ce.zip "http://download.oxid-esales.com/ce/index.php"
+fi
+
 unzip oxid_ce.zip
 rm oxid_ce.zip
 chown -R root:www-data *
