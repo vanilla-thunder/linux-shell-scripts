@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ -d "tmp" ]; then
   find tmp/ -name "*.txt" -print0 | xargs -0 rm -rf

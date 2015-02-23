@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 chown -R root:www-data *
 chown -R root:www-data .htaccess
