@@ -1,7 +1,0 @@
-#!/bin/bash
-
-node -v
-npm cache clean -f
-npm install -g n
-n stable
-node -v
