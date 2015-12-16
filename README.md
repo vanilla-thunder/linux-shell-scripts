@@ -8,26 +8,13 @@ so you might need to change some commands if you use different dist
 ### oxget
 downloads newest oxid ce and unzips it into the current folder  
 requires the unzip package (e.g. apt-get install unzip)
-
+### oxget 4.7.12
+will download particular version, e.g. 4.7.12  
+list of available versions can be found here: [http://wiki.oxidforge.org/Category:Downloads](http://wiki.oxidforge.org/Category:Downloads)
 
 ### oxrights
-sets chown and chmod permissions for files and directories
-
-
-## random scripts
-
-### server_setup.sh
-script for installing following components on a fresh debian installation (e.g. premaring a test/dev vm)
-* zip, unzip, bzip2, curl
-* apache2, libapache2-mod-php5, libapache2-mod-auth-mysql
-* PHP5: php5-cli php5-common php5-cgi php5-curl php5-gd php5-mcrypt php-mysql
-* Apache Mods: mod_rewrite, auth_mysql
- 
-##### optional (asks for confirmation):
-* MYSQL: mysql-common mysql-server mysql-client
-* GIT: git-core
-* NODE.JS: nodejs nodejs-legacy (backports) + NPM
-* imagemagick libpng-dev libjpeg-dev php5-imagick
+sets chown and chmod permissions for files and directories for oxid eshop, suitable for development phase  
+for live shops you need to make config and htaccess files read only
 
 
 ### a2restart
