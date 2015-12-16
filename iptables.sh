@@ -3,13 +3,41 @@
 # settings 
 device="eth0" # KVM
 #device="venet0" # OpenVZ
-sshport=22222 # SSh Port
-#pluto=87.139.57.37/0 # unsere firewall
+SSHPORT=22222 # SSh Port
+FAIL2BAN='OFF'
+HTTPS='OFF'
 
-args=("$@")
-if [ ${args[0]} ]; then
-	sshport="${args[0]}"
-fi
+echo "$#"
+while [[ $# -ge 1 ]]
+do
+	key="$1"
+
+	case $key in
+	-ssh)
+		SSHPORT="$2"
+		shift # past argument
+		;;
+    -https|-ssl)
+		HTTPS="ON"
+		#shift # past argument
+		;;
+    -f2b|-fail2ban)
+		FAIL2BAN='ON'
+		# shift # past argument
+		;;
+    *)
+		# unknown option
+		;;
+	esac
+	
+	shift # past argument or value
+done
+
+echo ""
+echo "   SSH port = $SSHPORT"
+echo "   HTTPS is $HTTPS"
+echo "   fail2ban is $FAIL2BAN"
+echo ""
 
 # iptables lookup
 iptables=`which iptables`
@@ -107,8 +135,10 @@ iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 80 -j ACCEPT
 ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 80 -j ACCEPT
 
 # allow HTTPS
-iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 443 -j ACCEPT
-ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 443 -j ACCEPT
+if [[ $HTTPS = 'ON' ]]; then
+	iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 443 -j ACCEPT
+	ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 443 -j ACCEPT
+fi
 
 # proxy on 8080
 #iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 8080 -j ACCEPT
@@ -165,9 +195,17 @@ ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 9418 -j ACCEPT
 #iptables -A INPUT -i $device -m state --state NEW -p tcp --dport 20 -j ACCEPT
 
 # allow SSH
-iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport $sshport -j ACCEPT
-ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport $sshport -j ACCEPT
-
+if [ $FAIL2BAN = 'ON' ]
+then
+	#iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport $SSHPORT -j fail2ban-ssh
+	#ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport $SSHPORT -j fail2ban-ssh
+	# iptables  -A INPUT -m state --state NEW -p tcp --dport 22 -j f2b-sshd
+	# ip6tables -A INPUT -m state --state NEW -p tcp --dport 22 -j f2b-sshd
+	echo "skip ssh"
+else
+	iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport $SSHPORT -j ACCEPT
+	ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport $SSHPORT -j ACCEPT
+fi
 #catch-me
 #iptables  -A INPUT -i $device -m state --state NEW -p tcp --dport 1080 -j ACCEPT
 #ip6tables -A INPUT -i $device -m state --state NEW -p tcp --dport 1080 -j ACCEPT
