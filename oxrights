@@ -1,7 +1,11 @@
 #!/bin/bash
 
 chown -R root:www-data *
-chown -R root:www-data .htaccess
-chmod 664 .htaccess
 find . -type d -exec chmod 2775 {} \;
 find . -type f -exec chmod 664 {} \;
+chmod 777 source/export
+chmod 777 source/log
+chmod 777 source/out/pictures
+chmod 777 source/out/media
+chmod 777 source/tmp
+chmod 777 var
