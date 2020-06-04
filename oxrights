@@ -9,3 +9,14 @@ chmod 777 source/out/pictures
 chmod 777 source/out/media
 chmod 777 source/tmp
 chmod 777 var
+if [ $1 -eq "--live" ]
+  then
+    chmod 664 source/Setup
+    chmod 664 source/config.inc.php
+    chmod 664 source/.htaccess
+ else 
+    chmod 777 source/Setup
+    chmod 777 source/config.inc.php
+    chmod 777 source/.htaccess
+fi
+  
