@@ -15,7 +15,7 @@ list of available versions can be found here: [http://wiki.oxidforge.org/Categor
 
 ## $ oxrights
 sets chown and chmod permissions for files and directories for oxid eshop, suitable for development phase  
-for live shops you need to make config and htaccess files read only
+for live shops you need to run `oxrights --live`
 
 ## $ cleartmp
 used in shop root directory, it will clear tmp/
