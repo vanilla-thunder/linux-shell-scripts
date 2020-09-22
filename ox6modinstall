@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ -f "metadata.php" ]; then
+  
+  packagename=$(php -r 'print json_decode(file_get_contents("./composer.json"), true)["name"];')
+  absModulePath=$PWD;
+  currentdir="$(basename -- $PWD)";
+  
+  # echo "absolute module path: $absModulePath";
+  # echo "basename: $currentdir";
+  
+  while [ $currentdir != "source" ]; do 
+	cd ../;
+    currentdir="$(basename -- $PWD)"
+  done
+  
+  cd ../;
+  shoproot=$PWD;
+  # echo "shop root: $shoproot";
+  
+  relModulePath=${absModulePath:${#shoproot}+1};
+  # echo "relative module path: $relModulePath";
+  
+  # running oxid console command
+  eval "vendor/bin/oe-console oe:module:install-configuration $relModulePath";
+  
+  # add composer path repository
+  eval "composer config repositories.$packagename path $relModulePath"
+  eval "composer require -n $packagename:*"
+  
+else
+  echo "metadata.php not found, please run this command in a module directory"
+fi
