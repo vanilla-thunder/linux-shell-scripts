@@ -23,11 +23,7 @@ if [ -f "metadata.php" ] && [ -f "composer.json" ]; then
   
   # running oxid console command
   eval "vendor/bin/oe-console oe:module:install-configuration $relModulePath";
-  
-  # add composer path repository
-  eval "composer config repositories.$packagename path $relModulePath"
-  eval "composer require -n $packagename:*"
-  
+ 
 else
   echo "metadata.php or composer.json not found, please run this command in a module directory"
 fi
