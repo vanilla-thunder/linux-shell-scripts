@@ -1,0 +1,14 @@
+#!/bin/bash
+
+chown -R root:www-data *
+find . -type d -exec chmod 2775 {} \;
+find . -type f -exec chmod 664 {} \;
+chmod 777 export
+chmod 777 log
+chmod -R 777 out/pictures
+chmod -R 777 out/media
+chmod -R 777 tmp
+chmod 777 setup
+chmod 777 config.inc.php
+chmod 777 .htaccess
+  

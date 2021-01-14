@@ -21,8 +21,8 @@ if [ -f "metadata.php" ]; then
   # echo "relative module path: $relModulePath";
   
   # running oxid console command
-  eval "vendor/bin/oe-console oe:module:install-configuration $relModulePath";
- 
+  eval "vendor/bin/oe-console oe:module:activate $relModulePath";
+  
 else
-  echo "metadata.php or composer.json not found, please run this command in a module directory"
+  echo "metadata.php not found, please run this command in a module directory"
 fi

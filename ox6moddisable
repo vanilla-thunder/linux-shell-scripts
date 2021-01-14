@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ -d "vendor" ]; then
+
+  args=("$@")
+  eval "vendor/bin/oe-console oe:module:deactivate ${args[0]}";
+  
+else
+  echo "this command is a shortcut for \"vendor/bin/oe-console oe:module:deactivate\", run this command in shop root directory"
+fi
